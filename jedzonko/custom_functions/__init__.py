@@ -1,0 +1,1 @@
+from jedzonko.custom_functions.classes import PaginatorClass

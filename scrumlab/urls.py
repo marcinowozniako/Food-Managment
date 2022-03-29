@@ -16,11 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from jedzonko.views import IndexView, LandingPageView, RecipeListView
+from jedzonko.views import IndexView, LandingPageView, \
+    RecipeListView, DashboardView, AddRecipe, PlanListView, \
+    AddPlan, PlanAddRecipe, PlanDetailsView
+
+
+from jedzonko.views import IndexView, LandingPageView, \
+    RecipeListView, DashboardView, AddRecipe, PlanListView, \
+    AddPlan, PlanAddRecipe, RecipeDetailsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', IndexView.as_view()),
-    path('', LandingPageView.as_view(), name='index'),
-    path('recipe/list', RecipeListView.as_view(), name='recipe_list'),
+    path('', LandingPageView.as_view(), name='index'),   # django jednak wyrzuca ten / jako warning
+    path('recipe/list/', RecipeListView.as_view(), name='recipe_list'),
+    path('main/', DashboardView.as_view(), name='dashboard'),
+    path('recipe/add/', AddRecipe.as_view(), name='add_recipe'),
+    path('plan/list/', PlanListView.as_view(), name='plan_list'),
+    path('plan/add/', AddPlan.as_view(), name='add_plan'),
+    path('plan/add-recipe/', PlanAddRecipe.as_view(), name='plan_add_recipe'),
+    path('plan/<int:us_id>/details', PlanDetailsView.as_view(), name='plan_details'),
+    path('recipe/<int:us_id>/', RecipeDetailsView.as_view(), name='recipe_details'),
+
 ]

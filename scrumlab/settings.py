@@ -114,6 +114,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+
+
 try:
     from scrumlab.local_settings import DATABASES
 except ModuleNotFoundError:
