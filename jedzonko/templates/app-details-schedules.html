@@ -1,74 +1,72 @@
 {% extends "__base__.html" %}
 {% block title %}{% endblock title %}
 {% block content %}
-<div class="dashboard-content border-dashed p-3 m-4 view-height">
+    <div class="dashboard-content border-dashed p-3 m-4 view-height">
 
-    <div class="row border-bottom border-3 p-1 m-1">
-        <div class="col noPadding">
-            <h3 class="color-header text-uppercase">SZCZEGÓŁY PLANU</h3>
+        <div class="row border-bottom border-3 p-1 m-1">
+            <div class="col noPadding">
+                <h3 class="color-header text-uppercase">SZCZEGÓŁY PLANU </h3>
+            </div>
+            <div class="col d-flex justify-content-end mb-2 noPadding">
+                <a href="{% url 'plan_add_recipe' %}?planid={{ id }}" class="btn btn-success rounded-0 pr-4 pl-4 mr-4 ml-4">
+                    Dodaj przepis</a>
+                <a href="javascript:history.back()" class="btn btn-success rounded-0 pr-4 pl-4">Powrót</a>
+            </div>
         </div>
-        <div class="col d-flex justify-content-end mb-2 noPadding">
-            <a href="" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Powrót</a>
-        </div>
-    </div>
 
-    <div class="schedules-content">
-        <div class="schedules-content-header">
-            <div class="form-group row">
+        <div class="schedules-content">
+            <div class="schedules-content-header">
+                <div class="form-group row">
                                 <span class="col-sm-2 label-size col-form-label">
                                     Nazwa planu
                                 </span>
-                <div class="col-sm-10">
-                    <p class="schedules-text">{{ name.plan.name }}</p>
+                    <div class="col-sm-10">
+                        <p class="schedules-text">{{ name.name }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
+                <div class="form-group row">
                                 <span class="col-sm-2 label-size col-form-label">
                                     Opis planu
                                 </span>
-                <div class="col-sm-10">
-                    <p class="schedules-text">
-                        {{ name.plan.description }}
-                    </p>
+                    <div class="col-sm-10">
+                        <p class="schedules-text">
+                            {{ name.description }}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <table class="table">
-            {% regroup days by day_name as days%}
-            {% for order in days %}
+            <table class="table">
+                {% regroup days by day_name as days%}
+                {% for day_name in days %}
 
-            <thead>
-            <tr class="d-flex">
-                <th class="col-2">{{ order.grouper }}</th>
-                <th class="col-7"></th>
-                <th class="col-1"></th>
-                <th class="col-2"></th>
-            </tr>
-            </thead>
+                    <thead>
+                    <tr class="d-flex">
+                        <th class="col-2">{{ day_name.grouper }}</th>
+                        <th class="col-7"></th>
+                        <th class="col-1"></th>
+                        <th class="col-2"></th>
+                    </tr>
+                    </thead>
 
-            <tbody class="text-color-lighter">
-            {% regroup order.list by meal_name as meal_name %}
-                        {% for meal in meal_name %}
+                    <tbody class="text-color-lighter">
+                    {% for meal in day_name.list %}
 
-            <tr class="d-flex">
-                <td class="col-2">{{ meal.grouper }}</td>
-                {% regroup meal.list by recipe as recipe_name  %}
-                {% for recipe in recipe_name %}
-                <td class="col-7">{{ recipe.grouper.name }}</td>
+                        <tr class="d-flex">
+                            <td class="col-2">{{ meal.meal_name }}</td>
+                            <td class="col-7">{{ meal.recipe.name }}</td>
+                            <td class="col-1 center">
+                                <a href="{% url 'delete_recipe_from_plan' meal.id %}" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                            </td>
+                            <td class="col-2 center">
+                                <a href="app-details-schedules.html"
+                                   class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
+                            </td>
+                        </tr>
                     {% endfor %}
-                <td class="col-1 center">
-                    <a href="#" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
-                </td>
-                <td class="col-2 center">
-                    <a href="app-details-schedules.html"
-                       class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                </td>
-            </tr>
-                        {% endfor %}
-        {% endfor %}
-            </tbody>
-        </table>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock content %}

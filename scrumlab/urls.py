@@ -18,8 +18,8 @@ from django.urls import path
 
 from jedzonko.views import IndexView, LandingPageView, \
     RecipeListView, DashboardView, AddRecipe, PlanListView, \
-    AddPlan, PlanAddRecipe, PlanDetailsView
-
+    AddPlan, PlanAddRecipe, PlanDetailsView, RecipeModifyView, \
+    DeleteRecipePlanView, EditScheduleView
 
 from jedzonko.views import IndexView, LandingPageView, \
     RecipeListView, DashboardView, AddRecipe, PlanListView, \
@@ -28,14 +28,16 @@ from jedzonko.views import IndexView, LandingPageView, \
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', IndexView.as_view()),
-    path('', LandingPageView.as_view(), name='index'),   # django jednak wyrzuca ten / jako warning
+    path('', LandingPageView.as_view(), name='index'),  # django jednak wyrzuca ten / jako warning
     path('recipe/list/', RecipeListView.as_view(), name='recipe_list'),
     path('main/', DashboardView.as_view(), name='dashboard'),
     path('recipe/add/', AddRecipe.as_view(), name='add_recipe'),
     path('plan/list/', PlanListView.as_view(), name='plan_list'),
     path('plan/add/', AddPlan.as_view(), name='add_plan'),
     path('plan/add-recipe/', PlanAddRecipe.as_view(), name='plan_add_recipe'),
-    path('plan/<int:us_id>/details', PlanDetailsView.as_view(), name='plan_details'),
+    path('plan/<int:us_id>/', PlanDetailsView.as_view(), name='plan_details'),
     path('recipe/<int:us_id>/', RecipeDetailsView.as_view(), name='recipe_details'),
-
+    path('recipe/modify/<int:us_id>/', RecipeModifyView.as_view(), name='modify_recipe'),
+    path('plan/modify/<int:us_id>', EditScheduleView.as_view(), name='modify_plan'),
+    path('plan/<int:us_id>/delete/', DeleteRecipePlanView.as_view(), name='delete_recipe_from_plan'),
 ]

@@ -39,5 +39,9 @@ class RecipePlan(models.Model):
     day_name = models.ForeignKey('DayName', on_delete=models.PROTECT)
 
 
+class Page(models.Model):
+    
+
+
 
 

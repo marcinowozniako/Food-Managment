@@ -6,10 +6,12 @@
     <div class="row border-bottom border-3 p-1 m-1">
         <div class="col noPadding"><h3 class="color-header text-uppercase">Lista
             Przepisów</h3></div>
-        <div class="col noPadding d-flex justify-content-end mb-2"><a
-                href="/app-add-recipe.html"
-                class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Dodaj
-            przepis</a></div>
+        <div class="col noPadding d-flex justify-content-end mb-2">
+            <a href="{% url 'plan_add_recipe' %}"
+               class="btn btn-success rounded-0 pr-4 pl-4 ml-4 mr-4">Dodaj przepis do planu</a>
+            <a href="{% url 'add_recipe' %}"
+                class="btn btn-success rounded-0 pr-4 pl-4">Dodaj przepis</a>
+        </div>
     </div>
     <table class="table border-bottom schedules-content">
         <thead>
@@ -41,58 +43,76 @@
             <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
                 <a href="#"
                    class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
-                <a href="/app-recipe-details.html"
+                <a href="{% url 'recipe_details' recipe.id %}"
                    class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                <a href="/app-edit-recipe.html"
+                <a href="{% url 'modify_recipe' recipe.id %}"
                    class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
             </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div class="pagination">
-    <span class="step-links">
-        <span>
-        {% if recipes_on_page.has_previous %}
-            <a href="?page={{ recipes_on_page.previous_page_number }}">< previous</a>
-        {% endif %}
+    <div class="d-flex justify-content-between">
+        <div class="pagination">
+        <span class="step-links">
+            <span>
+            {% if recipes_on_page.has_previous %}
+                <a href="?page={{ recipes_on_page.previous_page_number }}">< previous</a>
+            {% endif %}
+            </span>
+            <span>
+            {% if page_2less > 0 %}
+                <a href="&page={{ page_2less }}" class="neighbour-page">
+                    {{ page_2less }}</a>
+                <span> | </span>
+            {% endif %}
+            </span>
+            <span>
+            {% if recipes_on_page.has_previous %}
+                <a href="?page={{ recipes_on_page.previous_page_number }}" class="neighbour-page">
+                    {{ recipes_on_page.previous_page_number }}</a>
+                <span> | </span>
+            {% endif %}
+            </span>
+            <span>
+                 {{ recipes_on_page.number }}
+            </span>
+            <span>
+            {% if recipes_on_page.has_next %}
+                <td class="col-1"> | </td>
+                <a href="?page={{ recipes_on_page.next_page_number }}" class="neighbour-page">
+                    {{ recipes_on_page.next_page_number }}</a>
+            {% endif %}
+            </span>
+            <span>
+            {% if page_2more <= pag.num_pages %}
+                <span> | </span>
+                <a href="?page={{ page_2more }}" class="neighbour-page"> </a>
+            {% endif %}
+            </span>
+            <span>
+            {% if recipes_on_page.has_next %}
+                <a href="?page={{ recipes_on_page.next_page_number }}">next ></a>
+            {% endif %}
+            </span>
         </span>
-        <span>
-        {% if page_2less > 0 %}
-            <a href="?page={{ page_2less }}" class="neighbour-page">
-                {{ page_2less }}</a>
-            <span> | </span>
-        {% endif %}
-        </span>
-        <span>
-        {% if recipes_on_page.has_previous %}
-            <a href="?page={{ recipes_on_page.previous_page_number }}" class="neighbour-page">
-                {{ recipes_on_page.previous_page_number }}</a>
-            <span> | </span>
-        {% endif %}
-        </span>
-        <span>
-             {{ recipes_on_page.number }}
-        </span>
-        <span>
-        {% if recipes_on_page.has_next %}
-            <td class="col-1"> | </td>
-            <a href="?page={{ recipes_on_page.next_page_number }}" class="neighbour-page">
-                {{ recipes_on_page.next_page_number }}</a>
-        {% endif %}
-        </span>
-        <span>
-        {% if page_2more <= pag.num_pages %}
-            <span> | </span>
-            <a href="?page={{ page_2more }}" class="neighbour-page"> </a>
-        {% endif %}
-        </span>
-        <span>
-        {% if recipes_on_page.has_next %}
-            <a href="?page={{ recipes_on_page.next_page_number }}">next ></a>
-        {% endif %}
-        </span>
-    </span>
+        </div>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <label>Liczba przepisów na stronie
+                    <select name="records" onchange="form.submit()">
+                        {% for choice in choice_rec_on_list %}
+                        <option value= {{ choice }}
+                                        {% if choice|slugify == request.COOKIES.records_on_list_recipe %}
+                                        selected
+                                        {% endif %}>
+                            {{ choice }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock content %}
