@@ -1,0 +1,32 @@
+{% extends "__base__.html" %}
+{% block title %}Wyniki wyszukiwania Planu{% endblock %}
+{% block content %}
+    <div class="dashboard-content border-dashed p-3 m-4 view-height">
+        <div class="row border-bottom border-3 p-1 m-1">
+            <div class="col noPadding"><h3 class="color-header text-uppercase">Lista wyników wyszukiwania
+                {% if searching_value %}dla {{ searching_value }}{% endif %}</h3></div>
+        </div>
+
+        {% if searching_value %}
+            <table class="table border-bottom schedules-content">
+                <tbody class="text-color-lighter">
+                {% for plan in searched_value_from_data_base %}
+                    <tr class="col-2">
+                        <td><a href="{% url 'plan_details' plan.id %}">{{ plan.name }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if no_results %}
+                <h5 class="border-3 p-1 m-1">Brak wyników wyszukiwania dla tego zapytania</h5>
+            {% endif %}
+        {% else %}
+            <h5 class="border-3 p-1 m-1">Zapomniałeś wpisać planu do wyszukiwarki</h5>
+        {% endif %}
+        <div class="col noPadding d-flex justify-content mb-2">
+            <a href="{% url 'plan_list' %}"
+               class="btn btn-success rounded-0 pr-4 pl-4 ml-2 mr-4">Powrót do listy planów</a>
+        </div>
+
+    </div>
+{% endblock content %}

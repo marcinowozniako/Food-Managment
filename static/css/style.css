@@ -114,6 +114,7 @@ width: 90% !important;
 margin: 0 auto !important;
 }
 
+
 /*------------------------------*/
 /*---- Paddings ----*/
 /*------------------------------*/
@@ -304,6 +305,7 @@ margin: 0 auto !important;
 }
 
 
+
 /*------------------------------*/
 /*---- Dashboard ----*/
 /*------------------------------*/
@@ -456,4 +458,10 @@ margin: 0 auto !important;
 }
 .schedules-content-header {
   margin-bottom: 50px;
+}
+
+.paginator-table {
+  font-family: 'Times New Roman', serif;
+  border-spacing: 6px;
+  border-collapse: separate;
 }

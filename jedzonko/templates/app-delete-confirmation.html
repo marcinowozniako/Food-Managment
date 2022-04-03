@@ -1,0 +1,21 @@
+{% extends "__base__.html" %}
+{% block title %}Potwierdzenie usunięcia{% endblock %}
+{% block content %}
+    <div class="dashboard-content border-dashed p-3 m-4 view-height">
+        <div class="row border-bottom border-3 p-1 m-1">
+            <div class="col noPadding"><h3 class="color-header text-uppercase">Potwierdź usunięcie:</h3></div>
+        </div>
+        <div class="col-2 d-flex align-items-center justify-content flex-wrap">
+            <form action="" method="post">
+                {% csrf_token %}
+                <a href="">
+                    <input type="hidden" name="next" value="{{ id }}">
+                        <button type="submit" class="btn btn-danger rounded-0 text-light m-1">Potwierdzam</button>
+                        </a>
+            </form>
+            <a href="javascript:history.back()"
+               class="btn btn-success rounded-0 pr-4 pl-4">Nie usuwam</a>
+        </div>
+
+    </div>
+{% endblock content %}

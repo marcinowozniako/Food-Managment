@@ -8,13 +8,21 @@
             <div class="mt-4 ml-4 mr-4">
                 <div class="row border-bottom border-3">
                     <div class="col"><h3 class="color-header text-uppercase">Szczegóły przepisu</h3></div>
-                    <div class="col d-flex justify-content-end mb-2">
-                        <a href="{% url 'plan_add_recipe' %}"
-                           class="btn btn-color rounded-0 pr-4 pl-4 ml-4 mr-4">Dodaj przepis do planu</a>
-                        <button type="submit" class="btn btn-color rounded-0 pr-4 pl-4">Polub przepis</button>
+                    {% if recipe_plan %}
+                    <div class="d-flex justify-content-left mb-2">
+                        <a href="{% url 'plan_add_recipe' %}?recipeid={{ recipe.id }}"
+                           class="btn btn-color rounded-0 pr-3 pl-3 ml-3 mr-3 mt-3 mb-3">Dodaj przepis do planu</a>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-end mb-2">
+                        <button type="submit" name="likeButton" value="like" class="btn btn-color rounded-0 pr-3 pl-3 mt-3 mb-3">Polub przepis</button>
+                    </div>
+                    <div class="col d-flex justify-content mb-2">
+                        <button type="submit" name="unlikeButton" value="unlike" class="btn btn-color rounded-0 pr-3 pl-3 mt-3 mb-3">Nie lubię przepisu</button>
                     </div>
                     <div class="d-flex justify-content-end mb-2">
-                        <a href="javascript:history.back()" class="btn btn-color rounded-0 pr-4 pl-4">Powrót</a>
+                        <a href="javascript:history.back()" class="btn btn-color rounded-0 pr-3 pl-3 mt-3 mb-3">Powrót</a>
+{#                        <a href="{% url 'recipe_list' %}" class="btn btn-color rounded-0 pr-3 pl-3 mt-3 mb-3">Powrót</a>#}
                     </div>
                 </div>
 
@@ -70,6 +78,29 @@
                     <ul class="col-5 p-4 list-unstyled">
                         {{ recipe.ingredients }}
                     </ul>
+                {% if recipe_plan %}
+                     <div class="col"><h3 class="color-header text-uppercase">Przepis znajduje się w planach:</h3>
+                          <table class="table borderless">
+                            <tbody>
+                            {% regroup recipe_plan by plan as plans %}
+                            {% for plan in plans %}
+                                <tr class="d-flex">
+                                    <td class="col-7">
+                                        <a href="{% url 'plan_details' plan.grouper.id %}">{{ plan.grouper.name }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                              </tbody>
+                          </table>
+                     </div>
+                    {% else %}
+                    <div class="col"><h3 class="color-header text-uppercase">Przepis nie znajduje się jeszcze w żadnym planie</h3>
+                                        <div class="d-flex justify-content-left mb-2">
+                        <a href="{% url 'plan_add_recipe' %}?recipeid={{ recipe.id }}"
+                           class="btn btn-color rounded-0 pr-3 pl-3 ml-3 mr-3 mt-3 mb-3">Dodaj przepis do planu</a>
+                    </div>
+                    </div>
+                {% endif %}
                 </div>
             </div>
         </form>

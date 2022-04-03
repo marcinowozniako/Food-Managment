@@ -2,6 +2,8 @@ from django.db import models
 
 
 # Create your models here.
+from django.template.defaultfilters import slugify
+
 from jedzonko.enums import Days
 
 
@@ -34,14 +36,17 @@ class DayName(models.Model):
 class RecipePlan(models.Model):
     meal_name = models.CharField(max_length=255)
     order = models.IntegerField()
-    recipe = models.ForeignKey('Recipe', on_delete=models.PROTECT)
-    plan = models.ForeignKey('Plan', on_delete=models.PROTECT)
-    day_name = models.ForeignKey('DayName', on_delete=models.PROTECT)
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+    plan = models.ForeignKey('Plan', on_delete=models.CASCADE)
+    day_name = models.ForeignKey('DayName', on_delete=models.CASCADE)
 
-
-class Page(models.Model):
     
+class Page(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    slug = models.SlugField(max_length=255, unique=True)
 
-
-
-
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)

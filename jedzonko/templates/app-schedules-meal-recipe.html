@@ -56,9 +56,9 @@
                         Przepis
                     </label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="recipe" id="recipie">
+                        <select class="form-control" name="recipe" id="recipe">
                             {% for recipe in recipe_names_list %}
-                                <option value="{{ recipe.id }}">{{ recipe.name }}</option>
+                                <option value="{{ recipe.id }}" {% if recipe.id|slugify == request.GET.recipeid %} selected{% endif %}>{{ recipe.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
