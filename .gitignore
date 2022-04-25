@@ -172,9 +172,7 @@ celerybeat-schedule
 # Environments
 .env
 .venv
-env/
 venv/
-ENV/
 env.bak/
 venv.bak/
 
@@ -210,7 +208,6 @@ dmypy.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
-env/*
 venv/*
 .idea/*
 staticfiles/*
