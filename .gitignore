@@ -213,6 +213,7 @@ pip-selfcheck.json
 env/*
 venv/*
 .idea/*
+staticfiles/*
 
 local_settings.py
 
