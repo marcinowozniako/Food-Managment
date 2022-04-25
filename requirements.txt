@@ -6,6 +6,7 @@ dj-database-url==0.5.0
 Django==2.2.6
 django-extensions==3.1.5
 executing==0.8.3
+gunicorn==20.1.0
 ipython==8.2.0
 jedi==0.18.1
 matplotlib-inline==0.1.3
