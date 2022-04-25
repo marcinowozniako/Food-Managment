@@ -171,10 +171,10 @@ celerybeat-schedule
 
 # Environments
 .env
-.venv
-venv/
-env.bak/
-venv.bak/
+#.venv
+#venv/
+#env.bak/
+#venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -195,7 +195,7 @@ dmypy.json
 .pyre/
 
 ### Python Patch ###
-.venv/
+#.venv/
 
 ### Python.VirtualEnv Stack ###
 # Virtualenv
@@ -208,7 +208,7 @@ dmypy.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
-venv/*
+#venv/*
 .idea/*
 staticfiles/*
 
