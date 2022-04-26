@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.contrib import admin
 from django.urls import path
 
@@ -22,7 +24,7 @@ from jedzonko.views import IndexView, LandingPageView, \
     DeleteRecipePlanView, EditScheduleView, DeleteRecipeView, DeletePlanView, PageView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(os.environ.get('ADMIN_PATH'), admin.site.urls),
     path('index/', IndexView.as_view()),
     path('', LandingPageView.as_view(), name='index'),
     path('recipe/list/', RecipeListView.as_view(), name='recipe_list'),
